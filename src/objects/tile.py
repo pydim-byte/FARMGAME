@@ -13,5 +13,6 @@ class Tile(pygame.sprite.Sprite):
         pass
 
     def draw(self,surf,offset=0,alpha=1):
-        draw_rect = self.rect.move(-offset.x,-offset.y)
+        #draw_rect = self.rect.move(-offset.x,-offset.y)
+        draw_rect = self.rect
         surf.blit(self.image,draw_rect)

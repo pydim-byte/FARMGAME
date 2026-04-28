@@ -10,6 +10,12 @@ pygame.display.set_caption("FARMGAME")
 class Game:
     def __init__(self):
         pygame.init()
+        pygame.mixer.init()
+
+        pygame.mixer.music.load('assets/audio/fun.mp3')
+        pygame.mixer.music.set_volume(0.4)
+        pygame.mixer_music.play()
+
         self.display = pygame.display.set_mode((DISPLAY_WIDTH,DISPLAY_HEIGHT))
         self.screen = pygame.Surface((SCREEN_WIDTH,SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
@@ -47,11 +53,12 @@ class Game:
         self.inputs = {'left' : False, 'right' : False, 'up' : False, 'down' : False, 'space' : False}
 
     def update(self,dt):
-        pass
+        self.tilemap.all_sprites.update(dt)
 
     def draw(self):
         self.display.fill('white')
-        self.tilemap.all_sprites.draw(self.screen)
+        for sprite in self.tilemap.all_sprites:
+            sprite.draw(self.screen)
         self.display.blit((pygame.transform.scale(self.screen, self.display.get_rect().size)),(0,0))
         pygame.display.flip()
 
