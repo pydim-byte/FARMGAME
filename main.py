@@ -14,7 +14,7 @@ class Game:
 
         pygame.mixer.music.load('assets/audio/fun.mp3')
         pygame.mixer.music.set_volume(0.4)
-        pygame.mixer_music.play()
+        pygame.mixer_music.play(-1)
 
         self.display = pygame.display.set_mode((DISPLAY_WIDTH,DISPLAY_HEIGHT))
         self.screen = pygame.Surface((SCREEN_WIDTH,SCREEN_HEIGHT))

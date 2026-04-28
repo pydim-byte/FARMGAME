@@ -40,15 +40,13 @@ class Tilemap:
     def harvest_plant(self,plant):
         plant.kill()
         PLAYER_INVENTORY['carrots'] += 4
-        
 
     def plant_seed(self,pos):
         for p in self.plants:
             if p.pos != pos:
                 continue
-            if p.growth_cycle != 2:
-                continue
-            self.harvest_plant(p)
+            if p.growth_cycle == 2:
+                self.harvest_plant(p)
             return
         img = self.get_images('plant',3)
         plant = Plant(pos,img)
