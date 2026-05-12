@@ -13,48 +13,62 @@ class Player(pygame.sprite.Sprite):
         self.plant_ability = plant_ability
         
     def move(self,direction):
+        if GAME_STATES['current'] == 'farm':
+            TOPLEFT = FARM_TOPLEFT
+            BOTTOMRIGHT = FARM_BOTTOMRIGHT
+        if GAME_STATES['current'] == 'tutorial':
+            TOPLEFT = TUTORIAL_TOPLEFT
+            BOTTOMRIGHT = TUTORIAL_BOTTOMRIGHT
+
         if direction == 'left':
             self.facing = 'left'
             self.image = self.images[2]
-            if self.pos.x <= FARM_TOPLEFT[0]:
+            if self.pos.x <= TOPLEFT[0]:
                 return
             self.pos.x -= TILE_SIZE
         if direction == 'right':
             self.facing = 'right'
             self.image = self.images[3]
-            if self.pos.x >= FARM_BOTTOMRIGHT[0]:
+            if self.pos.x >= BOTTOMRIGHT[0]:
                 return
             self.pos.x += TILE_SIZE
         if direction == 'up':
             self.facing = 'up'
             self.image = self.images[1]
-            if self.pos.y <= FARM_TOPLEFT[1]:
+            if self.pos.y <= TOPLEFT[1]:
                 return
             self.pos.y -= TILE_SIZE
         if direction == 'down':
             self.facing = 'down'
             self.image = self.images[0]
-            if self.pos.y >= FARM_BOTTOMRIGHT[1]:
+            if self.pos.y >= BOTTOMRIGHT[1]:
                 return
             self.pos.y += TILE_SIZE
         self.rect.topleft = self.pos
 
     def plant_seeds(self):
+        if GAME_STATES['current'] == 'farm':
+            TOPLEFT = FARM_TOPLEFT
+            BOTTOMRIGHT = FARM_BOTTOMRIGHT
+        if GAME_STATES['current'] == 'tutorial':
+            TOPLEFT = TUTORIAL_TOPLEFT
+            BOTTOMRIGHT = TUTORIAL_BOTTOMRIGHT
+
         plant_offset = None
         if self.facing == 'left':
-            if self.pos.x <= FARM_TOPLEFT[0]:
+            if self.pos.x <= TOPLEFT[0]:
                 return
             plant_offset = pygame.Vector2(-TILE_SIZE,0)
         if self.facing == 'right':
-            if self.pos.x >= FARM_BOTTOMRIGHT[0]:
+            if self.pos.x >= BOTTOMRIGHT[0]:
                 return
             plant_offset = pygame.Vector2(TILE_SIZE,0)
         if self.facing == 'up':
-            if self.pos.y <= FARM_TOPLEFT[1]:
+            if self.pos.y <= TOPLEFT[1]:
                 return
             plant_offset = pygame.Vector2(0,-TILE_SIZE)
         if self.facing == 'down':
-            if self.pos.y >= FARM_BOTTOMRIGHT[1]:
+            if self.pos.y >= BOTTOMRIGHT[1]:
                 return
             plant_offset = pygame.Vector2(0,TILE_SIZE)
             

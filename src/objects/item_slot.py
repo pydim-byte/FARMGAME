@@ -12,24 +12,23 @@ class ItemSlot(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
         self.slot_number = slot_number
-        self.empty = True
+        self.active = False
+        if self.slot_number == 1:
+            self.active = True
 
     def update(self,dt):
-        if PLAYER_INVENTORY['carrots'] > 0 and self.slot_number == 2:
-            self.empty = False
+        pass
 
     def draw_text(self,surf):
-        font = pygame.font.Font(None,12)
-        item_count = PLAYER_INVENTORY['carrots']
-        text = font.render(f'{item_count:02d}', True, 'black')
+        font = FONT_LIBRARY['tiny']
+        item_count = PLAYER_INVENTORY[self.slot_number]['amount']
+        text = font.render(f'{item_count:02d}', False, 'black')
         textRect = text.get_rect()
-        textRect.midbottom = self.rect.midbottom[0], self.rect.midbottom[1] - 4
+        textRect.midbottom = self.rect.midbottom[0] + 320, self.rect.midbottom[1] - 2
         surf.blit(text,textRect)
 
     def draw(self,surf,offset=0,alpha=1):
-        if self.empty:
-            return
-        #draw_rect = self.rect.move(-offset.x,-offset.y)
-        draw_rect = self.rect
-        surf.blit(self.image,draw_rect)
+        if self.active:
+            draw_rect = self.rect
+            surf.blit(self.image,draw_rect)
         self.draw_text(surf)
