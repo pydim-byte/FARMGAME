@@ -2,7 +2,7 @@ import pygame
 from ..globals import *
 
 
-class TutorialText(pygame.sprite.Sprite):
+class ShopTutorialText(pygame.sprite.Sprite):
     def __init__(self,rect):
         super().__init__()
         self.type = type(self).__name__.lower()
@@ -15,14 +15,11 @@ class TutorialText(pygame.sprite.Sprite):
 
     def draw_text(self,surf):
         font = FONT_LIBRARY['medium']
-        msg = 'натисніть 1-6, щоб обрати насіння'
-        msg1 = 'натисніть пробіль, щоб посадити'
-        msg2 = 'зачекайте...'
-        msg3 = 'натисніть пробіль, щоб зібрати врожай'
-        msg4 = 'натисніть M, щоб відкрити магазин'
-        #msg4 = 'пробіл - купити насіння/продати овочі'
+        msg = 'вліво/вправо щоб обрати позицію'
+        msg1 = 'пробіл - купити насіння/продати овочі'
+        msg2 = 'Esc - завершити тренування'
 
-        msgs = [msg, msg1, msg2, msg3, msg4]
+        msgs = [msg, msg1, msg2]
         
         text = font.render(msgs[self.msg_index], False, 'black')
         textRect = text.get_rect()
@@ -30,4 +27,5 @@ class TutorialText(pygame.sprite.Sprite):
         surf.blit(text,textRect)
 
     def draw(self,surf,offset=0,alpha=1):
-        self.draw_text(surf)
+        if GAME_STATES['previous'] == 'tutorial':
+            self.draw_text(surf)

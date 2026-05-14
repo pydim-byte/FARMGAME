@@ -14,6 +14,12 @@ class Farm(State):
     def handle_inputs(self, inputs):
         self.inventory_controller.handle_inputs(inputs)
         self.player_controller.handle_inputs(inputs)
+        if inputs['m']:
+            self.quit = True
+            self.next_state = 'shop' 
+        if inputs['esc']:
+            self.quit = True
+            self.next_state = 'main_menu'
 
     def update(self, dt):
         pass

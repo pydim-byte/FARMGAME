@@ -8,6 +8,7 @@ from src.inventory_controller import InventoryController
 from src.states.farm import Farm
 from src.states.main_menu import MainMenu
 from src.states.tutorial import Tutorial
+from src.states.shop import Shop
 
 DISPLAY_WIDTH, DISPLAY_HEIGHT = 1152, 640
 SCREEN_WIDTH, SCREEN_HEIGHT = 576, 320
@@ -23,24 +24,33 @@ class Game:
         pygame.mixer.music.set_volume(0.4)
         pygame.mixer_music.play(-1)
         
-        FONT_LIBRARY['tiny'] = pygame.font.Font('assets/fonts/micro5.ttf',12)
+        FONT_LIBRARY['tiny'] = pygame.font.Font('assets/fonts/micro5.ttf',10)
+        FONT_LIBRARY['big'] = pygame.font.Font('assets/fonts/micro5.ttf',16)
+        FONT_LIBRARY['huge'] = pygame.font.Font('assets/fonts/micro5.ttf',36)
+
         FONT_LIBRARY['medium'] = pygame.font.Font('assets/fonts/digital.ttf',22)
 
         self.display = pygame.display.set_mode((DISPLAY_WIDTH,DISPLAY_HEIGHT))
         self.screen = pygame.Surface((SCREEN_WIDTH,SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
 
-        self.states = {'main_menu' : MainMenu, 'farm' : Farm, 'tutorial' : Tutorial}
+        self.states = {'main_menu' : MainMenu,
+                       'tutorial' : Tutorial,
+                        'farm' : Farm,
+                        'shop' : Shop}
 
         if os.path.isfile('save_file.json'):
             with open('save_file.json') as file:
                 SAVE_FILES['current'] = json.load(file)
 
         self.tilemap = Tilemap('main_menu')
-        self.state = self.states['main_menu'](self.tilemap)
-        GAME_STATES['current'] = 'main_menu'
+        self.state_name = 'main_menu'
+        self.state = self.states[self.state_name](self.tilemap)
+        GAME_STATES['current'] = self.state_name
 
-        self.inputs = {'left' : False, 'right' : False, 'up' : False, 'down' : False, 'space' : False, 'esc' : False, '1' : False, '2' : False, '3' : False}
+        self.inputs = {'left' : False, 'right' : False, 'up' : False, 'down' : False, 
+                       'space' : False, 'esc' : False, 'm' : False, 
+                       '1' : False, '2' : False, '3' : False, '4' : False, '5' : False, '6' : False,}
 
     def handle_events(self,event):
         if event.type == pygame.KEYDOWN:
@@ -56,12 +66,20 @@ class Game:
                 self.inputs['space'] = True
             if event.key == pygame.K_ESCAPE:
                 self.inputs['esc'] = True
+            if event.key == pygame.K_m:
+                self.inputs['m'] = True
             if event.key == pygame.K_1:
                 self.inputs['1'] = True
             if event.key == pygame.K_2:
                 self.inputs['2'] = True
             if event.key == pygame.K_3:
                 self.inputs['3'] = True
+            if event.key == pygame.K_4:
+                self.inputs['4'] = True
+            if event.key == pygame.K_5:
+                self.inputs['5'] = True
+            if event.key == pygame.K_6:
+                self.inputs['6'] = True
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
@@ -76,24 +94,36 @@ class Game:
                 self.inputs['space'] = False
             if event.key == pygame.K_ESCAPE:
                 self.inputs['esc'] = False
+            if event.key == pygame.K_m:
+                self.inputs['m'] = False
             if event.key == pygame.K_1:
                 self.inputs['1'] = False
             if event.key == pygame.K_2:
                 self.inputs['2'] = False
             if event.key == pygame.K_3:
                 self.inputs['3'] = False
+            if event.key == pygame.K_4:
+                self.inputs['4'] = False
+            if event.key == pygame.K_5:
+                self.inputs['5'] = False
+            if event.key == pygame.K_6:
+                self.inputs['6'] = False
 
     def handle_inputs(self):
         self.state.handle_inputs(self.inputs)
-        self.inputs = {'left' : False, 'right' : False, 'up' : False, 'down' : False, 'space' : False, 'esc' : False, '1' : False, '2' : False, '3' : False}
+        self.inputs = {'left' : False, 'right' : False, 'up' : False, 'down' : False, 
+                       'space' : False, 'esc' : False, 'm' : False, 
+                       '1' : False, '2' : False, '3' : False, '4' : False, '5' : False, '6' : False,}
 
     def flip_state(self):
-        current_state = self.state
+        current_state = self.state_name
         next_state = self.state.next_state
         self.state.done = False
         self.tilemap = Tilemap(next_state)
         self.state = self.states[next_state](self.tilemap)
+        GAME_STATES['previous'] = current_state
         GAME_STATES['current'] = next_state
+        self.state_name = next_state
 
     def save_game(self):
         plants = {}
@@ -125,15 +155,31 @@ class Game:
 
         inventory = {'inventory_slot_1' : {'slot_number' : 1, 'amount' : PLAYER_INVENTORY[1]['amount']},
                      'inventory_slot_2' : {'slot_number' : 2, 'amount' : PLAYER_INVENTORY[2]['amount']},
-                     'inventory_slot_3' : {'slot_number' : 3, 'amount' : PLAYER_INVENTORY[3]['amount']}}
+                     'inventory_slot_3' : {'slot_number' : 3, 'amount' : PLAYER_INVENTORY[3]['amount']},
+                     'inventory_slot_4' : {'slot_number' : 4, 'amount' : PLAYER_INVENTORY[4]['amount']},
+                     'inventory_slot_5' : {'slot_number' : 5, 'amount' : PLAYER_INVENTORY[5]['amount']},
+                     'inventory_slot_6' : {'slot_number' : 6, 'amount' : PLAYER_INVENTORY[6]['amount']},}
         
+        seeds_inventory = {'seed_slot_1' : {'slot_number' : 1, 'amount' : SEED_INVENTORY[1]['amount']},
+                           'seed_slot_2' : {'slot_number' : 2, 'amount' : SEED_INVENTORY[2]['amount']},
+                           'seed_slot_3' : {'slot_number' : 3, 'amount' : SEED_INVENTORY[3]['amount']},
+                           'seed_slot_4' : {'slot_number' : 4, 'amount' : SEED_INVENTORY[4]['amount']},
+                           'seed_slot_5' : {'slot_number' : 5, 'amount' : SEED_INVENTORY[5]['amount']},
+                           'seed_slot_6' : {'slot_number' : 6, 'amount' : SEED_INVENTORY[6]['amount']},}
+
+        player_money = {'money' : PLAYER_MONEY['current']}
+
         saved_objets = {}
         saved_objets.update(plants)
         saved_objets.update(player)
         saved_objets.update(item_slots)
         saved_objets.update(inventory)
+        saved_objets.update(seeds_inventory)
+        saved_objets.update(player_money)
         with open('save_file.json', 'w') as file:
             json.dump(saved_objets, file)
+        with open('save_file.json') as file:
+            SAVE_FILES['current'] = json.load(file)
 
     def update(self,dt):
         if self.state.quit:

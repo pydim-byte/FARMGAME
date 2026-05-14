@@ -11,6 +11,14 @@ class Tutorial(State):
         self.tilemap = tilemap
         self.player_controller = PlayerController(self.tilemap.player.sprite)
         self.inventory_controller = InventoryController(self.tilemap.item_slots)
+
+        for slot in PLAYER_INVENTORY.values():
+            slot['amount'] = 0
+
+        for seed in SEED_INVENTORY.values():
+            seed['amount'] = 12
+
+        PLAYER_MONEY['current'] = 100
     
     def handle_inputs(self, inputs):
         self.inventory_controller.handle_inputs(inputs)
@@ -36,6 +44,10 @@ class Tutorial(State):
         if inputs['esc']:
             self.quit = True
             self.next_state = 'main_menu'
+
+        if inputs['m']:
+            self.quit = True
+            self.next_state = 'shop' 
 
     def update(self, dt):
         pass
