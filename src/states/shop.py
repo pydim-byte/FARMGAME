@@ -9,7 +9,7 @@ class Shop(State):
         self.tilemap = tilemap
         
     def handle_inputs(self, inputs):
-        if inputs['esc']:
+        if inputs[pygame.K_ESCAPE]:
             if GAME_STATES['previous'] == 'tutorial':
                 self.quit = True
                 self.next_state = 'main_menu'
@@ -18,7 +18,7 @@ class Shop(State):
                 self.next_state = GAME_STATES['previous']
                 self.save_game()
 
-        if inputs['left']:
+        if inputs[pygame.K_LEFT]:
             acitve_slot = None
             for slot in self.tilemap.shop_slots:
                 if slot.active:
@@ -36,7 +36,7 @@ class Shop(State):
             if GAME_STATES['previous'] == 'tutorial' and self.tilemap.shop_tutorial_text.sprite.msg_index == 0:
                 self.tilemap.shop_tutorial_text.sprite.msg_index = 1
                 
-        if inputs['right']:
+        if inputs[pygame.K_RIGHT]:
             acitve_slot = None
             for slot in self.tilemap.shop_slots:
                 if slot.active:
@@ -54,7 +54,7 @@ class Shop(State):
             if GAME_STATES['previous'] == 'tutorial' and self.tilemap.shop_tutorial_text.sprite.msg_index == 0:
                 self.tilemap.shop_tutorial_text.sprite.msg_index = 1
 
-        if inputs['space']:
+        if inputs[pygame.K_SPACE]:
             acitve_slot = None
             for slot in self.tilemap.shop_slots:
                 if slot.active:

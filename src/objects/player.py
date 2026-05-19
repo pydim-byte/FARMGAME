@@ -20,25 +20,25 @@ class Player(pygame.sprite.Sprite):
             TOPLEFT = TUTORIAL_TOPLEFT
             BOTTOMRIGHT = TUTORIAL_BOTTOMRIGHT
 
-        if direction == 'left':
+        if direction == 'LEFT':
             self.facing = 'left'
             self.image = self.images[2]
             if self.pos.x <= TOPLEFT[0]:
                 return
             self.pos.x -= TILE_SIZE
-        if direction == 'right':
+        if direction == 'RIGHT':
             self.facing = 'right'
             self.image = self.images[3]
             if self.pos.x >= BOTTOMRIGHT[0]:
                 return
             self.pos.x += TILE_SIZE
-        if direction == 'up':
+        if direction == 'UP':
             self.facing = 'up'
             self.image = self.images[1]
             if self.pos.y <= TOPLEFT[1]:
                 return
             self.pos.y -= TILE_SIZE
-        if direction == 'down':
+        if direction == 'DOWN':
             self.facing = 'down'
             self.image = self.images[0]
             if self.pos.y >= BOTTOMRIGHT[1]:

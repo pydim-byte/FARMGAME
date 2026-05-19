@@ -10,16 +10,17 @@ class MainMenu(State):
         self.max_pointer = 1
         
     def handle_inputs(self, inputs):
-        if inputs['up']:
+        if inputs[pygame.K_UP]:
             self.current_pointer -= 1
         if self.current_pointer < 0:
             self.current_pointer = 1
-        if inputs['down']:
+            
+        if inputs[pygame.K_DOWN]:
             self.current_pointer += 1
         if self.current_pointer > self.max_pointer:
             self.current_pointer = 0
 
-        if inputs['space']:
+        if inputs[pygame.K_SPACE]:
             self.quit = True
             if self.current_pointer == 0:
                 self.next_state = 'farm'

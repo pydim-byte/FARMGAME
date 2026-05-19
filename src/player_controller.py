@@ -6,16 +6,16 @@ class PlayerController:
 
     def handle_inputs(self,inputs):
         move_direction = None
-        if inputs['left']:
-            move_direction = 'left'
-        if inputs['right']:
-            move_direction = 'right'
-        if inputs['up']:
-            move_direction = 'up'
-        if inputs['down']:
-            move_direction = 'down'
+        if inputs[pygame.K_LEFT]:
+            move_direction = 'LEFT'
+        if inputs[pygame.K_RIGHT]:
+            move_direction = 'RIGHT'
+        if inputs[pygame.K_UP]:
+            move_direction = 'UP'
+        if inputs[pygame.K_DOWN]:
+            move_direction = 'DOWN'
         if move_direction:
             self.player.move(move_direction)
 
-        if inputs['space']:
+        if inputs[pygame.K_SPACE]:
             self.player.plant_seeds()

@@ -24,10 +24,10 @@ class Tutorial(State):
         self.inventory_controller.handle_inputs(inputs)
         self.player_controller.handle_inputs(inputs)
 
-        if (inputs['1'] or inputs['2'] or inputs['3']) and self.tilemap.tutorial_text.sprite.msg_index == 0:
+        if (inputs[pygame.K_1] or inputs[pygame.K_2] or inputs[pygame.K_3]) and self.tilemap.tutorial_text.sprite.msg_index == 0:
             self.tilemap.tutorial_text.sprite.msg_index = 1
 
-        if inputs['space'] and self.tilemap.plants and self.tilemap.tutorial_text.sprite.msg_index == 1:
+        if inputs[pygame.K_SPACE] and self.tilemap.plants and self.tilemap.tutorial_text.sprite.msg_index == 1:
              self.tilemap.tutorial_text.sprite.msg_index = 2
 
         if self.tilemap.tutorial_text.sprite.msg_index == 2:
@@ -41,11 +41,11 @@ class Tutorial(State):
                 if slot['amount'] > 0:
                     self.tilemap.tutorial_text.sprite.msg_index = 4
 
-        if inputs['esc']:
+        if inputs[pygame.K_ESCAPE]:
             self.quit = True
             self.next_state = 'main_menu'
 
-        if inputs['m']:
+        if inputs[pygame.K_m]:
             self.quit = True
             self.next_state = 'shop' 
 

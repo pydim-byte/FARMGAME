@@ -12,14 +12,16 @@ class Farm(State):
         self.inventory_controller = InventoryController(self.tilemap.item_slots)
     
     def handle_inputs(self, inputs):
-        self.inventory_controller.handle_inputs(inputs)
-        self.player_controller.handle_inputs(inputs)
-        if inputs['m']:
-            self.quit = True
-            self.next_state = 'shop' 
-        if inputs['esc']:
+        if inputs[pygame.K_ESCAPE]:
             self.quit = True
             self.next_state = 'main_menu'
+        if inputs[pygame.K_m]:
+            self.quit = True
+            self.next_state = 'shop' 
+        self.inventory_controller.handle_inputs(inputs)
+        self.player_controller.handle_inputs(inputs)
+
+
 
     def update(self, dt):
         pass
