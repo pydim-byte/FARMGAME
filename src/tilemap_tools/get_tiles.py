@@ -38,6 +38,7 @@ def get_tiles(tilemap):
     for obj in tilemap.tmx_data.objects:
         pos = pygame.Vector2(obj.x,obj.y)
         images = get_images(obj.properties['obj_type'],obj.properties['images_variation'])
+        rect = pygame.rect.Rect(obj.x, obj.y, obj.width, obj.height)
         if obj.properties['obj_type'] == 'player':
             tilemap.player.add(Player(pos,images,PlantSeed(tilemap)))
         if obj.properties['obj_type'] == 'item_slot':
@@ -45,15 +46,12 @@ def get_tiles(tilemap):
         if obj.properties['obj_type'] == 'menu_pointer':
             tilemap.menu_pointers.add(MenuPointer(pos,images,obj.properties['pointer_number']))
         if obj.properties['obj_type'] == 'tutorial_text':
-            rect = pygame.rect.Rect(obj.x, obj.y, obj.width, obj.height)
             tilemap.tutorial_text.add(TutorialText(rect))
         if obj.properties['obj_type'] == 'shop_slot':
             tilemap.shop_slots.add(ShopSlot(pos,images,obj.properties['slot_number']))
         if obj.properties['obj_type'] == 'shop_money_box':
-            rect = pygame.rect.Rect(obj.x, obj.y, obj.width, obj.height)
             tilemap.shop_money_box.add(ShopMoneyBox(rect))
         if obj.properties['obj_type'] == 'shop_tutorial_text':
-            rect = pygame.rect.Rect(obj.x, obj.y, obj.width, obj.height)
             tilemap.shop_tutorial_text.add(ShopTutorialText(rect))
 
     add_sprites(tilemap.all_sprites, tilemap.plants, 1)
